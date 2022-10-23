@@ -27,7 +27,7 @@ void debug_print(const char* message) {
 
 
 void display(GLFWwindow* window, double currentTime) {
-    glClearColor(1.0, 0.0, 0.0, 1.0);
+    glClearColor(1.0, 1.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -58,6 +58,8 @@ int main() {
     }
 
     glfwSwapInterval(1);
+
+    init(window);
 
     while (!glfwWindowShouldClose(window)) {
         display(window, glfwGetTime());
