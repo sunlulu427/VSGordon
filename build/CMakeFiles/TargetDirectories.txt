@@ -1,0 +1,3 @@
+/Users/bytedance/Desktop/opengl-cpp/build/CMakeFiles/rebuild_cache.dir
+/Users/bytedance/Desktop/opengl-cpp/build/CMakeFiles/edit_cache.dir
+/Users/bytedance/Desktop/opengl-cpp/build/CMakeFiles/glApplication.dir
