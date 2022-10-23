@@ -92,7 +92,8 @@ glApplication_EXTERNAL_OBJECTS =
 
 glApplication: CMakeFiles/glApplication.dir/main.cpp.o
 glApplication: CMakeFiles/glApplication.dir/build.make
-glApplication: ../libs/libsoil2-debug.a
+glApplication: ../libs/libGLEW.2.2.0.dylib
+glApplication: ../libs/libglfw.3.3.dylib
 glApplication: CMakeFiles/glApplication.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/bytedance/Desktop/opengl-cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable glApplication"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/glApplication.dir/link.txt --verbose=$(VERBOSE)
