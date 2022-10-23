@@ -11,11 +11,18 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+const int DEBUG = 0;
 
 using namespace std;
 
 void init(GLFWwindow* window) {
 
+}
+
+void debug_print(const char* message) {
+    if (DEBUG) {
+        std::cout << message << std::endl;
+    }
 }
 
 
@@ -30,26 +37,35 @@ int main() {
     if (!glfwInit()) {
         exit(EXIT_FAILURE);
     }
+    debug_print("40");
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
+    debug_print("48");
+
     GLFWwindow* window = glfwCreateWindow(600, 600, "Chapter2-program1", NULL, NULL);
+    cout << "create window " << window << endl;
 
     glfwMakeContextCurrent(window);
 
     if (glewInit() != GLEW_OK) {
+        debug_print("55");
         exit(EXIT_FAILURE);
     }
+
+    glfwSwapInterval(1);
 
     while (!glfwWindowShouldClose(window)) {
         display(window, glfwGetTime());
         glfwSwapBuffers(window);
         glfwPollEvents();
+        debug_print("66");
     }
+
 
     glfwDestroyWindow(window);
     glfwTerminate();
