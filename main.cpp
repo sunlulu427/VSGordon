@@ -10,6 +10,9 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "utils.cpp"
+
+using namespace std;
 
 const int DEBUG = 0;
 
