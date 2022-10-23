@@ -13,22 +13,58 @@
 
 const int DEBUG = 0;
 
+#define numVAOs 1
+
+
+GLuint renderingProgram;
+GLuint vao[numVAOs];
+
+GLuint createShaderProgram() {
+    const char* vShaderCode = 
+        "#version 410 \n"
+        "void main() \n"
+        "{ gl_Position = vec4(0.0, 0.0, 0.0, 1.0); }";
+
+    const char* fragShaderCode = 
+        "#version 410 \n"
+        "out vec4 color; \n"
+        "void main() \n"
+        "{ if (gl_FragCoord.x < 200) color = vec4(1.0, 0.0, 0.0, 1.0); else color = vec4(0.0, 0.0, 1.0, 1.0); }";
+
+    GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
+    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+    glShaderSource(vShader, 1, &vShaderCode, NULL);
+    glShaderSource(fragmentShader, 1, &fragShaderCode, NULL);
+
+    glCompileShader(vShader);
+    glCompileShader(fragmentShader);
+
+    GLuint vfProgram = glCreateProgram();
+    glAttachShader(vfProgram, vShader);
+    glAttachShader(vfProgram, fragmentShader);
+    glLinkProgram(vfProgram);
+
+    return vfProgram;
+}
+
 using namespace std;
 
 void init(GLFWwindow* window) {
-
+    renderingProgram  = createShaderProgram();
+    cout << "create shader program " << renderingProgram << endl;
+    glGenVertexArrays(numVAOs, vao);
+    glBindVertexArray(vao[0]);
 }
-
-void debug_print(const char* message) {
-    if (DEBUG) {
-        std::cout << message << std::endl;
-    }
-}
-
 
 void display(GLFWwindow* window, double currentTime) {
-    glClearColor(1.0, 1.0, 0.0, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT);
+    // glClearColor(1.0, 1.0, 0.0, 1.0);
+    // glClear(GL_COLOR_BUFFER_BIT);
+
+    glUseProgram(renderingProgram);
+    glPointSize(30.0f);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // 线性插值
+    glDrawArrays(GL_POINTS, 0, 1);
 }
 
 
@@ -37,35 +73,24 @@ int main() {
     if (!glfwInit()) {
         exit(EXIT_FAILURE);
     }
-    debug_print("40");
-
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
-    debug_print("48");
 
     GLFWwindow* window = glfwCreateWindow(600, 600, "Chapter2-program1", NULL, NULL);
     cout << "create window " << window << endl;
 
     glfwMakeContextCurrent(window);
-
     if (glewInit() != GLEW_OK) {
-        debug_print("55");
         exit(EXIT_FAILURE);
     }
-
     glfwSwapInterval(1);
-
     init(window);
-
     while (!glfwWindowShouldClose(window)) {
         display(window, glfwGetTime());
         glfwSwapBuffers(window);
         glfwPollEvents();
-        debug_print("66");
     }
 
 
